@@ -15,10 +15,21 @@ let package = Package(
             name: "FileSystemClient",
             targets: ["FileSystemClient"]
         ),
+        .library(
+            name: "EventBusClient",
+            targets: ["EventBusClient"]
+        )
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-dependencies.git", from: "1.10.0"),
-        .package(url: "https://github.com/weichsel/ZIPFoundation.git", from: "0.9.0")
+        .package(
+            url: "https://github.com/weichsel/ZIPFoundation.git",
+            from: "0.9.0"
+        ),
+        .package(
+            url: "https://github.com/pointfreeco/swift-snapshot-testing",
+            from: "1.12.0"
+          ),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -31,9 +42,21 @@ let package = Package(
                 .product(name: "ZIPFoundation", package: "ZIPFoundation")
             ]
         ),
+        .target(
+            name: "EventBusClient",
+            dependencies: [
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "DependenciesMacros", package: "swift-dependencies"),
+            ]
+        ),
         .testTarget(
             name: "DependenciesExtraTests",
-            dependencies: ["FileSystemClient"]
+            dependencies: [
+                "FileSystemClient",
+                "EventBusClient",
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
+            ]
         ),
     ],
     swiftLanguageModes: [.v6]

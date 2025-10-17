@@ -1,0 +1,9 @@
+Received Events:
+Event 1: Start
+Event 2: Middle
+Event 3: End
+---
+Received Events:
+Event 1: Start
+Event 2: Middle
+Event 3: End
